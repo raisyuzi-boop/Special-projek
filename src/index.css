@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Barlow Condensed", sans-serif;
+  --font-sans: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --color-void: #0a0c14;
+  --color-autobot: #00f0ff;
+  --color-optimus: #ff1f3d;
+  --color-mythic: #f5c16c;
+  --color-steel: #d7deea;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #0a0c14;
+  color: #e7edf6;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+#root {
+  min-height: 100%;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  text-align: left;
+  border: 0;
+  display: block;
+}
+
+::selection {
+  background: #00f0ff;
+  color: #0a0c14;
+}
+
+:focus-visible {
+  outline: 2px solid #00f0ff;
+  outline-offset: 3px;
+}
+
+.font-display {
+  font-family: "Barlow Condensed", sans-serif;
+}
+
+.metal {
+  background-image: linear-gradient(180deg, #ffffff 0%, #d7deea 46%, #8b97ab 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.optimus-backdrop {
+  position: absolute;
+  right: -22%;
+  bottom: -6vh;
+  height: 104vh;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  object-position: right bottom;
+  opacity: 0.5;
+  filter: contrast(1.05) saturate(1.08);
+  user-select: none;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 8%, #000 76%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 8%, #000 76%, transparent 100%);
+}
+
+.page-scrim {
+  background:
+    linear-gradient(180deg, rgba(10, 12, 20, 0.08) 0%, rgba(10, 12, 20, 0.28) 46%, rgba(10, 12, 20, 0.82) 100%),
+    radial-gradient(ellipse at center, transparent 28%, #0a0c14 84%);
+}
+
+@media (min-width: 1024px) {
+  .optimus-backdrop {
+    right: -2vw;
+    bottom: -8vh;
+    height: 122vh;
+    opacity: 0.78;
+    mask-image:
+      linear-gradient(90deg, transparent 0%, #000 36%, #000 84%, transparent 100%),
+      linear-gradient(180deg, transparent 0%, #000 8%, #000 74%, transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, #000 36%, #000 84%, transparent 100%),
+      linear-gradient(180deg, transparent 0%, #000 8%, #000 74%, transparent 100%);
+    -webkit-mask-composite: source-in;
+  }
+
+  .page-scrim {
+    background:
+      linear-gradient(90deg, #0a0c14 0%, rgba(10, 12, 20, 0.62) 30%, rgba(10, 12, 20, 0.08) 62%, rgba(10, 12, 20, 0.42) 100%),
+      radial-gradient(ellipse at center, transparent 34%, #0a0c14 86%);
+  }
+}
+
+.hud-grid {
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at center, black 15%, transparent 78%);
+}
+
+.cta-shift {
+  background-image: linear-gradient(105deg, #ff1f3d 0%, #ff1f3d 42%, #00c2d1 100%);
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  transition: background-position 0.45s ease, box-shadow 0.45s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.cta-shift:hover {
+  background-position: 100% 50%;
+  box-shadow: 0 0 28px rgba(0, 240, 255, 0.28);
+}
+
+.chamfer {
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+}
+
+.chamfer-sm {
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+
+.chamfer:focus-visible,
+.chamfer-sm:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px #00f0ff;
+}
+
+.holo-ring {
+  background: conic-gradient(from 120deg, #00f0ff, #ffffff, #ff1f3d, #f5c16c, #7ef6ff, #00f0ff);
+  animation: holo 9s linear infinite;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 42s linear infinite;
+}
+
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+.pulse-dot {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes holo {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .holo-ring,
+  .ticker-track,
+  .pulse-dot {
+    animation: none;
+  }
+}

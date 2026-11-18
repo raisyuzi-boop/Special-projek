@@ -20,7 +20,7 @@ function Page() {
     <>
       <div className="pointer-events-none fixed inset-0 -z-10 bg-void">
         <div className="hud-grid absolute inset-0" />
-        <img src="/backdrop/optimus.png" alt="" aria-hidden="true" className="optimus-backdrop" />
+        <img src={`${import.meta.env.BASE_URL}backdrop/optimus.png`} alt="" aria-hidden="true" className="optimus-backdrop" />
         <div className="page-scrim absolute inset-0" />
       </div>
       <a

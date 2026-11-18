@@ -5,10 +5,11 @@ import { useEffect, useState } from "react"
  *  confirm: High tech bleep confirmation — https://assets.mixkit.co/active_storage/sfx/2520/2520-preview.mp3
  *  transform: Mechanical technology movements — https://assets.mixkit.co/active_storage/sfx/3117/3117-preview.mp3
  */
+const base = import.meta.env.BASE_URL
 const CLIPS = {
-  tick: "/sfx/tick.mp3",
-  confirm: "/sfx/confirm.mp3",
-  transform: "/sfx/transform.mp3",
+  tick: `${base}sfx/tick.mp3`,
+  confirm: `${base}sfx/confirm.mp3`,
+  transform: `${base}sfx/transform.mp3`,
 }
 
 const VOLUME = { tick: 0.22, confirm: 0.28, transform: 0.32 }

@@ -33,7 +33,7 @@ export const rarityTiers = [
   { id: "mythic", pull: "1:240", note: "Siri emas. Paling sukar dalam set ini." },
 ]
 
-const art = (file) => `/Card/${file}`
+const art = (file) => `${import.meta.env.BASE_URL}Card/${file}`
 
 export const cards = [
   {

@@ -48,8 +48,17 @@ export function Countdown() {
   return (
     <section id="edisi" className="scroll-mt-32 px-5 py-12 md:py-16" aria-labelledby="edisi-tajuk">
       <Reveal>
-        <div className="mx-auto grid max-w-[1200px] gap-8 border border-white/10 bg-[#0d1018] p-6 md:p-8 lg:grid-cols-[1.05fr_auto_.9fr] lg:items-center">
-          <div>
+        <div className="relative mx-auto max-w-[1200px] overflow-hidden border border-white/10 bg-[#0d1018]">
+          <div className="banner-stage">
+            <img
+              src={`${import.meta.env.BASE_URL}banner/performance-robots.png`}
+              alt="Barisan robot persembahan: Transformers, mega mech, dan robot sebenar."
+              className="banner-film"
+            />
+            <span className="banner-sheen" />
+          </div>
+          <div className="grid gap-8 p-6 md:p-8 lg:grid-cols-[1.05fr_auto_.9fr] lg:items-center">
+          <div className="relative z-10">
             <Eyebrow>Drop terhad</Eyebrow>
             <h2 id="edisi-tajuk" className="mt-2 font-display text-5xl leading-[0.9] text-white uppercase md:text-6xl">
               {drop.title}
@@ -63,7 +72,7 @@ export function Countdown() {
               {drop.claimed}/{drop.total} kotak ditempah
             </p>
           </div>
-          <div className="grid grid-cols-4 gap-2" aria-label="Masa berbaki">
+          <div className="relative z-10 grid grid-cols-4 gap-2" aria-label="Masa berbaki">
             {[
               [time.days, "Hari"],
               [time.hours, "Jam"],
@@ -76,7 +85,7 @@ export function Countdown() {
               </div>
             ))}
           </div>
-          <div>
+          <div className="relative z-10">
             {joined ? (
               <p className="text-sm leading-relaxed text-white" role="status">
                 Anda dalam senarai. Kami maklumkan 15 minit sebelum drop. {(drop.waitlist + 1).toLocaleString("en-MY")} kolektor sudah mendaftar.
@@ -103,6 +112,7 @@ export function Countdown() {
                 </button>
               </form>
             )}
+          </div>
           </div>
         </div>
       </Reveal>

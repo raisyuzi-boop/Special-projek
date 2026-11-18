@@ -102,6 +102,57 @@ body {
   }
 }
 
+.banner-stage {
+  position: relative;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.banner-film {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: center center;
+  animation: banner-drift 18s ease-in-out infinite alternate;
+}
+
+.banner-sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  mix-blend-mode: screen;
+  animation: banner-sheen 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes banner-drift {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.045);
+  }
+}
+
+@keyframes banner-sheen {
+  0% {
+    left: -30%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    left: 110%;
+    opacity: 0;
+  }
+}
+
 .hud-grid {
   background-image:
     linear-gradient(rgba(0, 240, 255, 0.045) 1px, transparent 1px),
@@ -185,7 +236,9 @@ body {
 
   .holo-ring,
   .ticker-track,
-  .pulse-dot {
+  .pulse-dot,
+  .banner-film,
+  .banner-sheen {
     animation: none;
   }
 }

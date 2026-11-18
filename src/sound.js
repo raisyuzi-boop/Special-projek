@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react"
 
-/** Mixkit Sound Effects Free License. Bukan audio dari video YouTube.
- *  tick: Sci-fi click — https://assets.mixkit.co/active_storage/sfx/900/900-preview.mp3
- *  confirm: High tech bleep confirmation — https://assets.mixkit.co/active_storage/sfx/2520/2520-preview.mp3
- *  transform: Mechanical technology movements — https://assets.mixkit.co/active_storage/sfx/3117/3117-preview.mp3
+/** Fail baharu dalam public/sfx/New, dimainkan pada kelajuan asal.
+ *  tick: satu pukulan awal transformers-sound (1.75s, puncak 0.14s).
+ *  confirm: hentakan whoosh science-fiction-effect-10 (10.5s, puncak 0.28s).
+ *  transform: rentak mekanikal transformers-sound, pudar selepas 0.85s.
+ *  Growling 21s tidak dipakai: tenaganya hanya memuncak pada saat ke-15.
  */
 const base = import.meta.env.BASE_URL
+const mechanical = `${base}sfx/New/freesound_community-transformers-sound-43700.mp3`
+const whoosh = `${base}sfx/New/freesound_community-science-fiction-effect-10-100364.mp3`
 const CLIPS = {
-  tick: `${base}sfx/tick.mp3`,
-  confirm: `${base}sfx/confirm.mp3`,
-  transform: `${base}sfx/transform.mp3`,
+  tick: mechanical,
+  confirm: whoosh,
+  transform: mechanical,
 }
-
-const VOLUME = { tick: 0.22, confirm: 0.28, transform: 0.32 }
+const CUE = {
+  tick: { start: 0, hold: 140, step: 0.4, volume: 0.85 },
+  confirm: { start: 0.1, hold: 280, step: 0.1, volume: 0.38 },
+  transform: { start: 0, hold: 850, step: 0.08, volume: 0.8 },
+}
 const KEY = "cybertron-sound"
 
 const listeners = new Set()
@@ -73,28 +79,32 @@ export function playSound(name) {
     audio.preload = "auto"
     pool[name] = audio
   }
+  const cue = CUE[name]
   stop()
-  audio.volume = VOLUME[name] ?? 0.25
-  try {
-    audio.currentTime = 0
-  } catch {
-    /* fail masih dimuat */
-  }
+  audio.volume = cue.volume
   current = audio
-  audio.play().catch(() => {})
-  if (name === "transform") {
-    capTimer = window.setTimeout(() => {
-      if (current !== audio) return
-      fadeTimer = window.setInterval(() => {
-        if (current !== audio) {
-          window.clearInterval(fadeTimer)
-          return
-        }
-        audio.volume = Math.max(0, audio.volume - 0.08)
-        if (audio.volume <= 0.02) stop()
-      }, 40)
-    }, 850)
+  const start = () => {
+    if (current !== audio) return
+    try {
+      audio.currentTime = cue.start
+    } catch {
+      /* metadata belum siap */
+    }
+    audio.play().catch(() => {})
   }
+  if (audio.readyState >= 1) start()
+  else audio.addEventListener("loadedmetadata", start, { once: true })
+  capTimer = window.setTimeout(() => {
+    if (current !== audio) return
+    fadeTimer = window.setInterval(() => {
+      if (current !== audio) {
+        window.clearInterval(fadeTimer)
+        return
+      }
+      audio.volume = Math.max(0, audio.volume - cue.step)
+      if (audio.volume <= 0.02) stop()
+    }, 30)
+  }, cue.hold)
 }
 
 export function toggleSound() {
